@@ -20,16 +20,30 @@ def scrape_data_point():
     Returns:
         str: The headline text if found, otherwise an empty string.
     """
-    req = requests.get("https://www.thedp.com")
+    req = requests.get("https://www.thedp.com/section/podcasts")
     loguru.logger.info(f"Request URL: {req.url}")
     loguru.logger.info(f"Request status code: {req.status_code}")
 
     if req.ok:
         soup = bs4.BeautifulSoup(req.text, "html.parser")
-        target_element = soup.find("a", class_="frontpage-link")
-        data_point = "" if target_element is None else target_element.text
-        loguru.logger.info(f"Data point: {data_point}")
+        #find all h3 element with class of standard link
+        h3_element = soup.find_all("h3", class_="standard-link")
+
+        #extract the first h3 element
+        if h3_element:
+            target = h3_element[0].find("a")
+            if target:
+                data_point = "" if target is None else target.text
+        
+        loguru.logger.info(f"Data point : {data_point}")
         return data_point
+
+    # if req.ok:
+    #     soup = bs4.BeautifulSoup(req.text, "html.parser")
+    #     target_element = soup.find("a", class_="frontpage-link")
+    #     data_point = "" if target_element is None else target_element.text
+    #     loguru.logger.info(f"Data point: {data_point}")
+    #     return data_point
 
 
 if __name__ == "__main__":
