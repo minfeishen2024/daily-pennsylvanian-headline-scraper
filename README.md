@@ -54,7 +54,7 @@ def scrape_data_point():
 
 
 ## Modification Explanation
-In order to obtain the newest podcast episode from the DP, I first modified the link in the request.get() function to get to the podcast pages. After inspecting the page, I found that the title for each of the podcast episode is contained within <h3> element with class of "standard-link". Within the h3 element, the title of the podcast itself is contained within <a href> element. Therefore, I modified the scraper to first find all h3 element with a corresponding class of standard-link, as reflected in h3_element = soup.find_all("h3", class_="standard-link") line. To extract the newest title, I then asked the scraper to access the first h3_element it found and extract the text from the "a" element contained within that h3 element :
+In order to obtain the newest podcast episode from the DP, I first modified the link in the request.get() function to get to the podcast pages. After inspecting the page, I found that the title for each of the podcast episode is contained within h3 element with class of "standard-link". Within the h3 element, the title of the podcast itself is contained within "a href" element. Therefore, I modified the scraper to first find all h3 element with a corresponding class of standard-link, as reflected in h3_element = soup.find_all("h3", class_="standard-link") line. To extract the newest title, I then asked the scraper to access the first h3_element it found and extract the text from the "a" element contained within that h3 element :
 ```python
         h3_element = soup.find_all("h3", class_="standard-link")
 
